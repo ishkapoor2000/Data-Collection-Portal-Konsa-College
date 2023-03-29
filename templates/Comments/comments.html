@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comments</title>
+  <link rel="icon" href="https://konsa-college-website.vercel.app/assets/KonsaCollege_desktopLogo-d9a0ad42.svg" type="image/any-icon">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+</head>
+<body>
+	<div class="container">
+		<h2> Add a college</h2>
+		<div class="row">
+			<div class="col-lg-12">
+			  <div class="card">
+				<div class="card-body">
+					
+				  <form action="/index" method="POST">
+					  
+					<div class="form-floating mb-3">
+					  <input type="text" required class="form-control form-control-lg border border-success" name="college_name" id="college_name" aria-describedby="emailHelp" placeholder="Eg: Indian Institute of Technology, BHU" spellcheck="false" data-ms-editor="true" value="test">
+					  <label for="college_name"><i class="bi bi-buildings text-success"></i>
+						  <span class="border-start border-success ps-3">College Name</span>
+					  </label>
+					</div>
+					  
+					<div class="form-floating mb-3">
+					  <input type="text" required class="form-control border border-success" name="college_uuid" id="college_uuid" aria-describedby="emailHelp" placeholder="Put unique UUID for college" spellcheck="false" data-ms-editor="true" value="test">
+					  <label for="college_uuid"><i class="bi bi-at text-success"></i>
+						  <span class="border-start border-success ps-3">College UUID</span>
+					  </label>
+						<a href="/uuid" class="btn btn-dark btn-block mt-3" target="popup" onclick="window.open('/uuid','Check for UUID','width=800,height=400')">Check UUID</a>
+						<iframe class="w-100 mt-2" style="height: 80vh;" src='https://data-collection-portal-konsa-college.ishkapoor.repl.co/uuid'></iframe>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="text" required class="form-control border border-success" name="college_location" id="college_location" aria-describedby="emailHelp" placeholder="Put full location for college" spellcheck="false" data-ms-editor="true" value="test location">
+					  <label for="college_location"><i class="bi bi-geo-alt-fill text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  College Location
+						  </span>
+					  </label>
+						<small id="textHelp" class="form-text text-muted">Write all positives in seperate lines. Do not add any extra space. Write one point in a single line.</small>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="text" required class="form-control border border-success" name="college_state" id="college_state" aria-describedby="emailHelp" placeholder="Eg: Punjab" spellcheck="false" data-ms-editor="true" value="test state">
+					  <label for="college_state"><i class="bi bi-geo text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  College State
+						  </span>
+					  </label>
+						<small id="textHelp" class="form-text text-muted">Write all positives in seperate lines. Do not add any extra space. Write one point in a single line.</small>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="number" class="form-control border border-success" name="college_campus_area" id="college_campus_area" aria-describedby="emailHelp" placeholder="Put campus area for college (keep standard unit)" spellcheck="false" data-ms-editor="true" value="123">
+					  <label for="college_campus_area"><i class="bi bi-map-fill text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  College Campus Area
+						  </span>
+					  </label>
+						<small id="textHelp" class="form-text text-muted">Write all positives in seperate lines. Do not add any extra space. Write one point in a single line.</small>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="url" class="form-control border border-success" name="header_photo_link" id="header_photo_link" aria-describedby="emailHelp" placeholder="Put the link for the background banner photo." spellcheck="false" data-ms-editor="true" oninput="$(this).siblings('img').attr('src', $(this).val())">
+					  <label for="header_photo_link"><i class="bi bi-card-image text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  Header Photo Link
+						  </span>
+					  </label>
+						<img class="w-100 h-auto mt-2" src="{{ url_for('static', filename='images/homepage_banner.svg') }}" alt="Header Image Link you've added is either broken or blank.">
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="url" class="form-control border border-success" name="college_logo_link" id="college_logo_link" aria-describedby="emailHelp" placeholder="Put the link for the college logo." spellcheck="false" data-ms-editor="true" oninput="$(this).siblings('img').attr('src', $(this).val())">
+					  <label for="college_logo_link"><i class="bi bi-image text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  College Logo Link
+						  </span>
+					  </label>
+						<img class="w-100 h-auto mt-2" src="{{ url_for('static', filename='images/homepage_banner.svg') }}" alt="Header Image Link you've added is either broken or blank.">
+					</div>
+
+				    <div class="form-floating mb-3">
+					  <input type="text" class="form-control border border-success" name="overview" id="overview" aria-describedby="emailHelp" placeholder="Put the link for the college logo." spellcheck="false" data-ms-editor="true" oninput="$(this).siblings('img').attr('src', $(this).val())">
+					  <label for="overview"><i class="bi bi-blockquote-right text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  Overview
+						  </span>
+					  </label>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="number" class="form-control border border-success" name="nirf" id="nirf" data-ms-editor="true">
+					  <label for="nirf"><i class="bi bi-123 text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  NIRF Ranking
+						  </span>
+					  </label>
+						<small id="textHelp" class="form-text text-muted">Write all positives in seperate lines. Do not add any extra space. Write one point in a single line.</small>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="text" class="form-control border border-success" name="mode_of_admission" id="mode_of_admission" aria-describedby="emailHelp" placeholder="Mode Of Admission (Write all the mode of admissions which are required for this particular college)" spellcheck="false" data-ms-editor="true">
+					  <label for="mode_of_admission"><i class="bi bi-geo text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  Mode Of Admission
+						  </span>
+					  </label>
+					  <div id="newRowmode_of_admission"></div>
+					  <div class="accordion mt-3" id="accordion_mode_of_admission">
+						   <div class="accordion-item">
+						     <h2 class="accordion-header" id="heading_mode_of_admission">
+						       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_mode_of_admission" aria-expanded="true" aria-controls="collapse_mode_of_admission">
+						         View Saved Content
+						       </button>
+						     </h2>
+						     <div id="collapse_mode_of_admission" class="accordion-collapse collapse" aria-labelledby="heading_mode_of_admission" data-bs-parent="#accordion_mode_of_admission">
+						       <div class="accordion-body">
+						         <strong>
+									 <p role="alert" id="mode_of_admission_save">...</p>
+								 </strong>
+						       </div>
+						     </div>
+						   </div>
+						 </div>
+					  <button id="addRowmode_of_admission" type="button" class="btn btn-info"onclick="addNewElem('mode_of_admission')"title="Add New Row"><i class="bi bi-plus-square"></i></button>
+					  <button id="saveDatamode_of_admission" type="button" class="btn btn-warning"title="Save"><i class="bi bi-file-earmark-check"></i></button>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="text" class="form-control border border-success" name="exams" id="exams" aria-describedby="emailHelp" placeholder="Exams (Write all the exams which are required for this particular college)" spellcheck="false" data-ms-editor="true">
+					  <label for="exams"><i class="bi bi-geo text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  Exams
+						  </span>
+					  </label>
+					  <div id="newRowexams"></div>
+					  <div class="accordion mt-3" id="accordion_exams">
+						   <div class="accordion-item">
+						     <h2 class="accordion-header" id="heading_exams">
+						       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_exams" aria-expanded="true" aria-controls="collapse_exams">
+						         View Saved Content
+						       </button>
+						     </h2>
+						     <div id="collapse_exams" class="accordion-collapse collapse" aria-labelledby="heading_exams" data-bs-parent="#accordion_exams">
+						       <div class="accordion-body">
+						         <strong>
+									 <p role="alert" id="exams_save">...</p>
+								 </strong>
+						       </div>
+						     </div>
+						   </div>
+						 </div>
+					  <button id="addRowexams" type="button" class="btn btn-info"onclick="addNewElem('exams')"title="Add New Row"><i class="bi bi-plus-square"></i></button>
+					  <button id="saveDataexams" type="button" class="btn btn-warning"title="Save"><i class="bi bi-file-earmark-check"></i></button>
+					</div>
+
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control border border-success" name="railway" id="railway" aria-describedby="emailHelp" placeholder="" spellcheck="false" data-ms-editor="true">
+						<label for="railway"><i class="bi bi-train-front text-success"></i>
+							<span class="border-start border-success ps-3">
+								Railway
+							</span>
+						</label>
+						<div id="newRowrailway" data-type=2></div>
+						<div class="accordion mt-3" id="accordion_railway">
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="heading_railway">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_railway" aria-expanded="true" aria-controls="collapse_railway">
+										View Saved Content
+									</button>
+								</h2>
+								<div id="collapse_railway" class="accordion-collapse collapse" aria-labelledby="heading_railway" data-bs-parent="#accordion_railway">
+									<div class="accordion-body">
+										<strong>
+										<p role="alert" id="railway_save">...</p>
+									</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button id="addRowrailway" type="button" class="btn btn-info" onclick="addNewElem('railway')" title="Add New Row"><i class="bi bi-plus-square"></i></button>
+						<button id="saveDatarailway" type="button" class="btn btn-warning" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+					</div>
+
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control border border-success hidden" name="bus" id="bus" aria-describedby="emailHelp" spellcheck="false" data-ms-editor="true">
+						<label for="bus"><i class="bi bi-bus-front text-success"></i>
+							<span class="border-start border-success ps-3">
+								Buses
+							</span>
+						</label>
+						<div id="newRowbus" data-type=2></div>
+						<div class="accordion mt-3" id="accordion_bus">
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="heading_bus">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_bus" aria-expanded="true" aria-controls="collapse_bus">
+										View Saved Content
+									</button>
+								</h2>
+								<div id="collapse_bus" class="accordion-collapse collapse" aria-labelledby="heading_bus" data-bs-parent="#accordion_bus">
+									<div class="accordion-body">
+										<strong>
+										<p role="alert" id="bus_save">...</p>
+									</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button id="addRowbus" type="button" class="btn btn-info" onclick="addNewElem('bus')" title="Add New Row"><i class="bi bi-plus-square"></i></button>
+						<button id="saveDatabus" type="button" class="btn btn-warning" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+					</div>
+
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control border border-success" name="airport" id="airport" aria-describedby="emailHelp" placeholder="" spellcheck="false" data-ms-editor="true">
+						<label for="airport"><i class="bi bi-airplane-engines-fill text-success"></i>
+							<span class="border-start border-success ps-3">
+								Airports
+							</span>
+						</label>
+						<div id="newRowairport" data-type=2></div>
+						<div class="accordion mt-3" id="accordion_airport">
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="heading_airport">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_airport" aria-expanded="true" aria-controls="collapse_airport">
+										View Saved Content
+									</button>
+								</h2>
+								<div id="collapse_airport" class="accordion-collapse collapse" aria-labelledby="heading_airport" data-bs-parent="#accordion_airport">
+									<div class="accordion-body">
+										<strong>
+										<p role="alert" id="airport_save">...</p>
+									</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button id="addRowairport" type="button" class="btn btn-info" onclick="addNewElem('airport')" title="Add New Row"><i class="bi bi-plus-square"></i></button>
+						<button id="saveDataairport" type="button" class="btn btn-warning" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+					</div>
+
+					<div class="mb-3">
+						<div class="form-group">
+							<label class="form-label" for="positives"><i class="bi bi-geo text-success"></i>
+								<span class="border-start border-success ps-3">
+									Positives
+								</span>
+							</label>
+						</div>
+						<textarea type="text" class="form-control" name="positives" id="positives" rows="3" placeholder="Write Positives Here..."></textarea>
+						<small id="textHelp" class="form-text text-muted">Write all positives in seperate lines. Do not add any extra space. Write one point in a single line.</small>
+					</div>
+
+					<div class="mb-3">
+						<div class="form-group">
+							<label class="form-label" for="negatives"><i class="bi bi-geo text-success"></i>
+								<span class="border-start border-success ps-3">
+									Negatives
+								</span>
+							</label>
+						</div>
+						<textarea type="text" class="form-control" name="negatives" id="negatives" rows="3" placeholder="Write Negatives Here..."></textarea>
+						<small id="textHelp" class="form-text text-muted">Write all negatives in seperate lines. Do not add any extra space. Write one point in a single line.</small>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="text" class="form-control border border-success" name="highest_package" id="highest_package" data-ms-editor="true">
+					  <label for="highest_package"><i class="bi bi-currency-rupee text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  Highest package
+						  </span>
+					  </label>
+						<small id="textHelp" class="form-text text-muted">Mention Amount with Unit.</small>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="text" class="form-control border border-success" name="median_package" id="median_package" data-ms-editor="true">
+					  <label for="median_package"><i class="bi bi-currency-rupee text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  Median package
+						  </span>
+					  </label>
+						<small id="textHelp" class="form-text text-muted">Mention Amount with Unit.</small>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="text" class="form-control border border-success" name="average_package" id="average_package" data-ms-editor="true">
+					  <label for="average_package"><i class="bi bi-currency-rupee text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  Avergae package
+						  </span>
+					  </label>
+						<small id="textHelp" class="form-text text-muted">Mention Amount with Unit.</small>
+					</div>
+	
+
+					<div class="form-floating mb-3">
+					  <input type="text" class="form-control border border-success" name="top_recruiters" id="top_recruiters" data-ms-editor="true">
+					  <label for="top_recruiters"><i class="bi bi-currency-rupee text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  Top recruiters
+						  </span>
+					  </label>
+						<small id="textHelp" class="form-text text-muted">Mention Recruiters ',' seperated.</small>
+					</div>
+
+					<div class="form-floating mb-3">
+					    <input type="text" class="form-control border border-success hide" name="fees" id="fees" aria-describedby="emailHelp" placeholder="" spellcheck="false" data-ms-editor="true">
+					    <label for="fees"><i class="bi bi-geo text-success"></i>
+							<span class="border-start border-success ps-3">
+								Fee Structure
+							</span>
+						</label>
+					    <div id="newRowfees" data-type=1></div>
+					    <div class="accordion" id="accordion_fees">
+					        <div class="accordion-item">
+					            <h2 class="accordion-header" id="heading_fees">
+					                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_fees" aria-expanded="true" aria-controls="collapse_fees">
+										View Saved Content
+									</button>
+					            </h2>
+					            <div id="collapse_fees" class="accordion-collapse collapse" aria-labelledby="heading_fees" data-bs-parent="#accordion_fees">
+					                <div class="accordion-body">
+					                    <strong>
+										<p role="alert" id="fees_save">...</p>
+									</strong>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					    <button id="addRowfees" type="button" class="btn btn-info" onclick="addNewElem('fees')" title="Add New Row"><i class="bi bi-plus-square"></i></button>
+					    <button id="saveDatafees" type="button" class="btn btn-warning" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+					</div>
+
+					<div class="form-floating mb-3">
+					  <input type="url" class="form-control border border-success" name="review_video" id="review_video" aria-describedby="emailHelp" spellcheck="false" data-ms-editor="true" oninput="$(this).siblings('iframe').attr('src', $(this).val())">
+					  <label for="review_video"><i class="bi bi-image text-success"></i>
+						  <span class="border-start border-success ps-3">
+							  College Review Video
+						  </span>
+					  </label>
+						<iframe class="w-100 h-auto mt-2" src=''></iframe>
+						<small id="textHelp" class="form-text text-muted">Add <strong>embedded</strong> video link and <em>not normal</em> link.</small>
+					</div>
+
+					<button type="submit" class="
+						btn btn-success
+						font-weight-medium
+						rounded-pill
+						px-4
+					">
+					  <div class="d-flex align-items-center">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send feather-sm fill-white me-2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+						Submit
+					  </div>
+					</button>
+				  </form>
+					
+				</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function elementHTML(name, count) {
+			var singleEleme = ''
+			singleEleme += '<div id="inputFormRow">'
+			singleEleme += '<div class="input-group mt-1 mb-1">'
+			singleEleme += `<input type="text" name="${name}_${count}" id="${name}_${count}" class="form-control m-input border border-success" placeholder="Enter ${name}" autocomplete="off" value="" spellcheck="false" data-ms-editor="true">`
+			singleEleme += '<div class="input-group-append">'
+			singleEleme += '<button id="removeRow" type="button" class="btn btn-danger"title="Remove"><i class="bi bi-trash"></i></button>'
+			singleEleme += '</div>'
+			singleEleme += '</div>'
+			singleEleme += '</div>'
+
+			var pairEleme = ''
+			pairEleme += '<div id="inputFormRow">'
+			pairEleme += '<div class="input-group mt-1 mb-1">'
+			pairEleme += `<input type="text" name="${name}_${count}_type" id="${name}_${count}_type" class="${name}_type form-control m-input border border-success" placeholder="Enter ${name} Type" autocomplete="off" value="" spellcheck="false" data-ms-editor="true">`
+			pairEleme += `<input type="text" name="${name}_${count}_amount" id="${name}_${count}_amount" class="${name}_amount form-control m-input border border-success" placeholder="Enter ${name} Amount" autocomplete="off" value="" spellcheck="false" data-ms-editor="true">`
+			pairEleme += '<div class="input-group-append">'
+			pairEleme += '<button id="removeRow" type="button" class="btn btn-danger"title="Remove"><i class="bi bi-trash"></i></button>'
+			pairEleme += '</div>'
+			pairEleme += '</div>'
+			pairEleme += '</div>'
+
+			var optionEleme = ''
+			optionEleme += '<div id="inputFormRow">'
+			optionEleme += '<div class="input-group mt-1 mb-1">'
+			optionEleme += `<input type="text" name="${name}_${count}_name" id="${name}_${count}_name" class="${name}_name form-control m-input" placeholder="Enter ${name} Name" autocomplete="off" value="">`
+			optionEleme += `<input type="text" name="${name}_${count}_distance" id="${name}_${count}_distance" class="${name}_distance form-control m-input" placeholder="Enter ${name} Distance" autocomplete="off" value="">`
+			optionEleme += '<div class="input-group-append">'
+			optionEleme += '<button id="removeRow" type="button" class="btn btn-danger"title="Remove"><i class="bi bi-trash"></i></button>'
+			optionEleme += '</div>'
+			optionEleme += '</div>'
+			optionEleme += '</div>'
+
+			let type = $("#newRow" + name).data("type")
+
+			switch (type) {
+				case 1:
+			    	html = pairEleme
+			    	break
+				case 2:
+			    	html = optionEleme
+			    	break
+				default:
+					html = singleEleme
+					break
+			}
+
+			return html
+		}
+
+		var count = 0
+		function addNewElem(name) {
+			parent = "#newRow"+name
+			output = "#"+name
+			saveData = "#saveData"+name
+			addRow = "#addRow"+name
+			count++
+			var html = elementHTML(name, count)
+
+			$(parent).append(html)
+
+			$(document).on('click', '#removeRow', function () {
+				$(this).closest('#inputFormRow').remove()
+			})
+
+			$(saveData).click(function() {
+				parent = "#newRow"+name
+				output = "#"+name
+				let type = $(parent).data("type")
+				let arr = joinMultiFields(parent, name, type)
+
+				switch (type) {
+					case 1:
+				    	{
+							$("#"+name+"_save").html(`[${arr}]`)
+							console.log(`[${arr}]`, arr)
+							$(output).val(`[${arr}]`)
+						}
+				    	break
+					case 2:
+						{
+							$("#"+name+"_save").html(`${arr}`)
+							console.log(`${arr}`, arr)
+							$(output).val(arr)
+						}
+				    	break
+					default:
+						{
+							$("#"+name+"_save").html(`${arr}`)
+							$(output).val(`[${arr}]`)
+						}
+						break
+				}
+			})
+		}
+
+		function joinMultiFields(parent, name, type) {
+			var arr = []
+
+			switch (type) {
+				case 1: // When data-type=1
+					{
+						obj = $(parent).find(":input.form-control")
+						obj_type = $(parent).find(`:input.${name}_type.form-control`)
+						obj_amount = $(parent).find(`:input.${name}_amount.form-control`)
+						for (let i = 0; i <= (obj_type.length - 1); i++) {
+							if ($(obj_type[i]).val()) {
+								arr.push(`{"${$(obj_type[i]).val()}":"\u20b9${$(obj_amount[i]).val()}"}`)
+							} else {
+								arr.push(null)
+							}
+						}
+					}
+					break
+				case 2:
+					{
+						obj = $(parent).find(":input.form-control")
+						obj_name = $(parent).find(`:input.${name}_name.form-control`)
+						obj_distance = $(parent).find(`:input.${name}_distance.form-control`)
+						for (let i = 0; i <= (obj_name.length - 1); i++) {
+							if ($(obj_name[i]).val()) {
+								arr.push(`{"trans": "${$(obj_name[i]).val()}", "icon": "", "dist": "${$(obj_distance[i]).val()} KM"}`)
+							} else {
+								arr.push(null)
+							}
+						}
+					}
+					break
+				default: // When there is not data-type
+					{
+						obj = $(parent).find(":input.form-control")
+						for (let i = 0; i <= (obj.length - 1); i++) {
+							if ($(obj[i]).val()) {
+								arr.push(`"${$(obj[i]).val()}"`)
+							} else {
+								arr.push(null)
+							}
+						}
+					}
+					break
+			}
+
+			return arr
+		}
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+</body>
+</html>

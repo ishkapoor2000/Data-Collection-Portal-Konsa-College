@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="{{ url_for('static', filename='images/KonsaCollege_Logo.svg') }}">
+
+	<title>Konsa College Data Collection Portal</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
+
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<style>
+		a {
+			text-decoration: none;
+		}
+		a > * {
+			color: black;
+		}
+		a:hover {
+			color: #303030;
+		}
+	</style>
+</head>
+
+<body>
+
+	<header>
+		<div class="navbar navbar-dark bg-dark box-shadow">
+			<div class="container d-flex justify-content-between">
+				<a href="/" class="navbar-brand d-flex align-items-center">
+					<img src="{{ url_for('static', filename='images/KonsaCollege_Logo.svg') }}" alt="Konsa College ?">
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<main role="main">
+
+		<div class="album py-5 bg-light">
+			<div class="container">
+
+				<div class="row">
+					<div class="col-md-4">
+						<a href="/index"><div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="{{ url_for('static', filename='images/Percentile_Predictor.jpg') }}" alt="Click to Open Card">
+							<div class="card-body"><h2>College Data</h2>
+								<p class="card-text">This is a wider card with supporting text below as a natural
+									lead-in to additional content. This content is a little bit longer.</p>
+								
+							</div>
+						</div></a>
+					</div>
+					<div class="col-md-4">
+						<a href="/exams"><div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="{{ url_for('static', filename='images/Percentile_Predictor.jpg') }}" alt="Click to Open Card">
+							<div class="card-body"><h2>Exams Data</h2>
+								<p class="card-text">This is a wider card with supporting text below as a natural
+									lead-in to additional content. This content is a little bit longer.</p>
+								
+							</div>
+						</div></a>
+					</div>
+					<div class="col-md-4">
+						<a href="/counselings"><div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="{{ url_for('static', filename='images/Percentile_Predictor.jpg') }}" alt="Click to Open Card">
+							<div class="card-body"><h2>Counseling Data</h2>
+								<p class="card-text">This is a wider card with supporting text below as a natural
+									lead-in to additional content. This content is a little bit longer.</p>
+							</div>
+						</div></a>
+					</div>
+
+					<div class="col-md-4">
+						<a href="/news"><div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="{{ url_for('static', filename='images/Percentile_Predictor.jpg') }}" alt="Click to Open Card">
+							<div class="card-body"><h2>News/Updates Data</h2>
+								<p class="card-text">This is a wider card with supporting text below as a natural
+									lead-in to additional content. This content is a little bit longer.</p>
+							</div>
+						</div></a>
+					</div>
+
+					<div class="col-md-4">
+						<a href="/blogs"><div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="{{ url_for('static', filename='images/Percentile_Predictor.jpg') }}" alt="Click to Open Card">
+							<div class="card-body"><h2>Write a Story</h2>
+								<p class="card-text">This is a wider card with supporting text below as a natural
+									lead-in to additional content. This content is a little bit longer.</p>								
+							</div>
+						</div></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+</body>
+
+</html>

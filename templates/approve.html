@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="https://konsa-college-website.vercel.app/assets/KonsaCollege_desktopLogo-d9a0ad42.svg" type="image/any-icon">
+    <title>Approve College Data - Admin Portal</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Admin Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+	{% if username == "admin" and password == "kcadmin123" %}
+
+	<!-- Nav Tabs Start -->
+	<div class="container mb-7 mt-3">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+		    <li class="nav-item">
+		        <a class="nav-link d-flex active" data-bs-toggle="tab" href="#draftCollegesTab" role="tab">
+		            <span><i class="bi bi-house-x-fill"></i>
+		            </span>
+		            <span class="d-none d-md-block ms-2">Draft Colleges</span>
+		        </a>
+		    </li>
+		    <li class="nav-item">
+		        <a class="nav-link d-flex" data-bs-toggle="tab" href="#approvedCollegesTab" role="tab">
+		            <span><i class="bi bi-house-check"></i>
+		            </span>
+		            <span class="d-none d-md-block ms-2">Approved Colleges</span>
+		        </a>
+		    </li>
+		    <li class="nav-item">
+		        <a class="nav-link d-flex" data-bs-toggle="tab" href="#commentsTab" role="tab">
+		            <span><i class="bi bi-chat-right-text-fill"></i>
+		            </span>
+		            <span class="d-none d-md-block ms-2">Comments</span>
+		        </a>
+		    </li>
+		</ul>
+		<!-- Tab panes -->
+		<div class="tab-content">
+		    <div class="tab-pane active" id="draftCollegesTab" role="tabpanel">
+				<h1>Draft Colleges</h1>
+				{% if nonApprovedColleges|length==0 %}
+				<div class="alert alert-dark" role="alert">
+					No Pending Colleges to Approve!!
+				</div>
+				{% else %}
+		        <table class="table" id="draftTable">
+		            <thead>
+						<tr>
+				            <th>S.No.</th>
+				            <th>Name</th>
+				            <th>Actions</th>
+				        </tr>
+		            </thead>
+		            <tbody>
+		                {% for college in nonApprovedColleges %}
+		                <tr>
+		                    <td scope="row"><strong>{{loop.index}}</strong></td>
+		                    <td scope="row">{{college.college_name}}</td>
+		                    <td>
+								<a title="Delete" href="/delete_admin/{{college.sno}}" type="button" class="btn btn-danger btn-sm mx-1" onclick="return confirm('Are you sure you want to delete this item? This would permanently delete this data. Be careful little sunshine!')"><i class="bi bi-trash"></i></a>
+								<a title="Approve" href="/approve/{{college.sno}}" type="button" class="btn btn-success btn-sm mx-1"><i class="bi bi-plus-circle"></i></a>
+								<a title="Preview" href="https://konsa-college-website.vercel.app/admin/{{college.college_uuid}}?password=FamLearn123" class="btn btn-info btn-sm mx-1"><i class="bi bi-eye-fill"></i></a>
+								<a title="Add a comment" class="btn btn-dark btn-sm mx-1" data="{{college.sno}}" onclick='{$("#comment").removeClass(function(){return $(this).hasClass("invisible") ? "invisible" : ""; }); $("#comment").find("#sno").val("{{college.sno}}");}'><i class="bi bi-chat-left-dots-fill"></i></a>
+		                    </td>
+		                </tr>
+		                {% endfor %}
+		            </tbody>
+		        </table>
+				{% endif %}
+		    </div>
+
+			<div class="tab-pane" id="approvedCollegesTab" role="tabpanel">
+				<h1>Approved Colleges</h1>
+				{% if approvedColleges|length==0 %}
+				<div class="alert alert-dark" role="alert">
+					No College yet Approved !!!
+				</div>
+				{% else %}
+				<table class="table" id="approvedTable">
+					<thead>
+						<tr>
+							<th>S.No.</th>
+							<th>Name</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for college in approvedColleges %}
+						<tr>
+							<td scope="row"><strong>{{loop.index}}</strong></td>
+							<td scope="row">{{college.college_name}}</td>
+							<td>
+								<a title="Delete" href="/delete_admin/{{college.sno}}" type="button" class="btn btn-danger btn-sm mx-1" onclick="return confirm('Are you sure you want to delete this item? This would permanently delete this data. Be careful little sunshine!')"><i class="bi bi-trash"></i></a>
+						<a title="Un-Approve" href="/unapprove/{{college.sno}}" type="button" class="btn btn-success btn-sm mx-1"><i class="bi bi-dash-circle"></i></a>
+						<a title="Preview" href="https://konsa-college-website.vercel.app/admin/{{college.college_uuid}}?password=FamLearn123" class="btn btn-info btn-sm mx-1"><i class="bi bi-eye-fill"></i></a>
+						<a class="btn btn-dark btn-sm mx-1" onclick='$("#comment").removeClass(function(){return $(this).hasClass("invisible") ? "invisible" : "";});'><i class="bi bi-chat-left-dots-fill"></i></a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% endif %}
+			</div>
+
+			<div class="tab-pane" id="commentsTab" role="tabpanel" style="background-color: #ad655f;">
+		        <!-- 	Footer Comment Section Start -->
+				<footer>
+					<section>
+					{% if allComments|length==0 %}
+					<div class="alert alert-dark" role="alert">
+						No Comments !!!
+						Make one...
+					</div>
+					{% else %}
+					  <div class="container my-5 py-5">
+						<div class="row d-flex justify-content-center">
+						  <div class="col-md-12 col-lg-10">
+							<div class="card text-dark">
+								<div class="p4" style="padding: 1rem 0rem 0rem 1rem;">
+									<h4 class="mb-0">Recent comments</h4>
+									<p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+								</div>
+							{% for comment in allComments %}
+							  <div class="card-body p-4">
+								<div class="d-flex flex-start">
+								  <img class="rounded-circle shadow-1-strong me-3"
+									src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="60"
+									height="60" />
+								  <div class="w-100">
+									<h6 class="fw-bold mb-1">{{comment.user_name}}</h6>
+									<div class="d-flex align-items-center mb-3">
+									  <p class="mb-0">
+										{{ comment.date_created.strftime('%d %B %Y') }}
+									  	{% if comment.commentApprovedStatus == '1' %}
+											<span class="badge bg-success">Approved</span>
+										{% else %}
+											<span class="badge bg-warning">Pending</span>
+										{% endif %}
+									  </p>
+									  <a href="/delete_comment/{{comment.n}}" class="link-muted"><i class="bi bi-trash3-fill ms-2"></i></a>
+									  {% if comment.commentApprovedStatus == '0' %}<a href="/approve_comment/{{comment.n}}" class="link-muted"><i class="bi bi-check-square ms-2"></i></a>{% endif %}
+									  <a href="/update/{{comment.sno}}" class="link-muted"><i class="bi bi-box-arrow-up-right ms-2"></i></a>
+									</div>
+									<p class="mb-0"  style="word-wrap: break-word;word-break: break-word;">
+									  {{comment.message}}
+									</p>
+								  </div>
+								</div>
+							  </div>
+							  <hr class="my-0" />
+							{% endfor %}
+							</div>
+						  </div>
+						</div>
+					  </div>
+					{% endif %}
+					</section>
+				  </footer>
+				<!-- 	Footer Comment Section End -->
+		    </div>
+		</div>
+	</div>
+	<!-- Nav Tabs End -->
+
+	<!-- 	Comment Start -->
+	<div id="comment" class="comment w-100 position-fixed invisible" style="z-index: 1; top: 20%;">
+		<div class="d-flex justify-content-center">
+		  <div class="col-md-12 col-lg-10 col-xl-8">
+			<div class="card py-3 shadow-lg" style="background-color: rgba(0,0,0, 0.3);backdrop-filter: blur(10px);">
+			  <form action="/adminPage" method="POST">
+				  <div class="card-footer py-3 border-0">
+					<div class="d-flex flex-start w-100">
+					  <img class="rounded-circle shadow-1-strong me-3 d-none d-md-block"
+						src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+						height="40" />
+					  <div class="form-outline w-100">
+						<label class="form-label" for="commenter"><h5>Name</h5></label>
+						<input class="form-control" placeholder="Enter Name Here" name="commenter" id="commenter"></input>
+						<label class="form-label mt-3" for="sno"><h5>S.No.</h5></label>
+						<input class="form-control" type="number" placeholder="Enter College's Serial No. Here" name="sno" id="sno" value="55"></input>
+						<label class="form-label mt-3" for="message"><h5>Message</h5></label>
+						<textarea class="form-control" name="message" id="message" rows="4"></textarea>
+					  </div>
+					</div>
+					<div class="float-end mt-2 pt-1">
+					  <button type="submit" class="btn btn-primary btn-sm">Post comment</button>
+					  <button type="button" class="btn btn-dark btn-sm" onclick='$("#comment").addClass(function(){return $(this).hasClass("invisible") ? "" : "invisible";});'>Cancel</button>
+					</div>
+				  </div>
+				</form>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	<!-- 	Comment End -->
+
+	<script>
+		$(document).ready(function () {
+			$('#draftTable').DataTable({
+    			responsive: true,
+				scroll: true
+			});
+		});
+		$(document).ready(function () {
+			$('#approvedTable').DataTable({
+    			responsive: true,
+				scroll: true
+			});
+		});
+	</script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+	
+	{% else %}
+	<div class="m-3">
+		<h2>Wrong Username or Password</h2>
+		<a href="/" onload="this.click()"><h3>Log In Again</h3></a>
+	</div>
+	{% endif %}
+</body>
+
+</html>

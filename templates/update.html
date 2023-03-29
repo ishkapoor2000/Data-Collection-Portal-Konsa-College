@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update College Data</title>
+	<link rel="icon" href="{{ url_for('static', filename='images/KonsaCollege_Logo.svg') }}" type="image/any-icon">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+	<style>
+		body {
+			overflow-x: hidden;
+		}
+		.hide {
+			visibility: collapse;
+			transform: scale(0.5);
+		}
+		div .mb-3 {
+		    padding: 1rem;
+		    border: 2px solid lightgray;
+		    border-radius: 1rem;
+		}
+		label {
+			font-size: 1.3rem;
+		}
+	</style>
+</head>
+
+<body>
+{% set states = [
+	"",
+	"Andaman and Nicobar Islands",
+	"Andhra Pradesh",
+	"Arunachal Pradesh",
+	"Assam",
+	"Bihar",
+	"Chandigarh",
+	"Chhattisgarh",
+	"Dadra and Nagar Haveli",
+	"Daman and Diu",
+	"Delhi",
+	"Goa",
+	"Gujarat",
+	"Haryana",
+	"Himachal Pradesh",
+	"Jammu & Kashmir",
+	"Jharkhand",
+	"Karnataka",
+	"Kerala",
+	"Ladakh",
+	"Lakshadweep",
+	"Madhya Pradesh", 
+	"Maharashtra", 
+	"Manipur", 
+	"Meghalaya", 
+	"Mizoram", 
+	"Nagaland", 
+	"Odisha", 
+	"Puducherry", 
+	"Punjab", 
+	"Rajasthan", 
+	"Sikkim", 
+	"Tamil Nadu", 
+	"Telangana", 
+	"Tripura", 
+	"Uttar Pradesh ",  
+	"Uttarakhand ",  
+	"West Bengal"
+] %}
+
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">CollegeData</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container mb-3">
+        <h2> Update College Info</h2>
+        <form action="/update/{{college.sno}}" method="POST">
+
+            <div class="mb-3">
+                <label for="college_name" class="form-label">College Name</label>
+                <input type="text" required class="form-control" name="college_name" value="{{college.college_name}}"
+                    id="college_name" aria-describedby="emailHelp" placeholder="Indian Institute of Technology, BHU">
+			</div>
+
+			<div class="mb-3">
+				<label for="college_uuid" class="form-label">College UUID</label>
+				<input type="text" required class="form-control" name="college_uuid" value="{{college.college_uuid}}" id="college_uuid"
+					placeholder="Put neat UUID for college">
+			</div>
+
+			<div class="mb-3">
+				<label for="college_location" class="form-label">College Location</label>
+				<input type="text" class="form-control" name="college_location" value="{{college.college_location}}" id="college_location"
+					placeholder="Put full location for college">
+			</div>
+
+			<div class="mb-3">
+				<label for="college_state" class="mr-sm-2">College State</label>
+				{% if college.college_state %}
+				  	<select required id="college_state" name="college_state" class="form-select mr-sm-2">
+					{% for state in states %}
+						{% if state == college.college_state %}
+						<option selected value="{{ state }}">{{ state }}</option>
+						{% endif %}
+						<option value="{{ state }}">{{ state }}</option>
+					{% endfor %}
+				{% else %}
+				  	<select required id="college_state" name="college_state" class="form-select mr-sm-2">
+					{% for state in states %}
+						<option value="{{ state }}">{{ state }}</option>
+					{% endfor %}
+				{% endif %}
+			  	</select>
+
+			</div>
+
+			<div class="mb-3">
+				<label for="college_campus_area" class="form-label">College Campus Area</label>
+				<input type="number" class="form-control" name="college_campus_area" value="{{college.college_campus_area}}" id="college_campus_area" placeholder="Put campus area for college in numerals keeping standard unit only.">
+			</div>
+
+			<div class="mb-3">
+				<label for="header_photo_link" class="form-label">Header Photo Link</label>
+				<input type="text" class="form-control" name="header_photo_link"
+					value="{{college.header_photo_link}}" id="header_photo_link"
+					placeholder="Put the link for the background banner photo." oninput="$(this).siblings('img').attr('src', $(this).val())">
+				<img class="w-50 h-auto mt-2" src='{{college.header_photo_link}}' alt="Header Image Link you've added is either broken or blank.">
+			</div>
+
+			<div class="mb-3">
+				<label for="college_logo_link" class="form-label">College Logo Link</label>
+				<input type="text" class="form-control" name="college_logo_link"
+					value="{{college.college_logo_link}}" id=" college_logo_link"
+					placeholder="Put the link for the college logo." oninput="$(this).siblings('img').attr('src', $(this).val())">
+				<img class="w-50 h-auto mt-2" src='{{college.college_logo_link}}' alt="Logo Image Link you've added is either broken or blank.">
+			</div>
+
+			<div class="mb-3">
+				<label for="overview" class="form-label">Overview</label>
+				<input type="text" class="form-control" name="overview" value="{{college.overview}}" id="overview">
+			</div>
+
+			<div class="mb-3">
+				<label for="nirf" class="form-label">NIRF Ranking</label>
+				<input type="text" class="form-control" name="nirf" value="{{college.nirf}}" id="nirf">
+			</div>
+
+
+			<div class="mb-3">
+                <label for="mode_of_admission" class="form-label">Mode of Admission</label>
+				<p class="alert alert-dark" role="alert" id="mode_of_admission_save"></p>
+				<input id="mode_of_admission" name="mode_of_admission" type="text" class="form-control m-input hide" placeholder="Final List of Exams" autocomplete="off" value>
+				<div id="newRowmode_of_admission">
+				{% if college.mode_of_admission %}
+					{% for mode_of_admission in college.mode_of_admission %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input type="text" name="mode_of_admission_{{loop.index}}" id="mode_of_admission_{{loop.index}}" class="form-control m-input" placeholder="Enter Exam No. {{loop.index}}" autocomplete="off" value="{{mode_of_admission}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+				</div>
+				<button id="addRowmode_of_admission" type="button" class="btn btn-info" onclick="addNewElem('mode_of_admission')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDatamode_of_admission" type="button" class="btn btn-warning" onclick="saveField('mode_of_admission')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+
+			<div class="mb-3">
+                <label for="exams" class="form-label">Exams (Write all the
+                    exams which are required for this particular college)</label>
+				<p class="alert alert-dark" role="alert" id="exams_save"></p>
+				<input id="exams" name="exams" type="text" class="form-control m-input hide" placeholder="Final List of Exams" autocomplete="off" value>
+				<div id="newRowexams">
+				{% if college.exams %}
+					{% for exams in college.exams %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input type="text" name="exams_{{loop.index}}" id="exams_{{loop.index}}" class="form-control m-input" placeholder="Enter Exam No. {{loop.index}}" autocomplete="off" value="{{exams}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+				</div>
+				<button id="addRowexams" type="button" class="btn btn-info" onclick="addNewElem('exams')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDataexams" type="button" class="btn btn-warning" onclick="saveField('exams')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+			<p class="form-label">Connectivity Codes: RAILWAY, BUS, METRO, AIRPORT </p>
+
+			<div class="mb-3">
+                <label for="railway" class="form-label">New Connectivity: Railway <img src="https://konsa-college-website-icons.s3.ap-northeast-1.amazonaws.com/assets/icons/train.png" alt="train"></label>
+				<p class="alert alert-dark" role="alert" id="railway_save"></p>
+				<input id="railway" name="railway" type="text" class="form-control m-input hide" placeholder="Railway List" autocomplete="off" value>
+                <div id="newRowrailway" data-type=2>
+				{% if college.railway != None %}
+					{% for r in college.railway %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input required type="text" name="railway_{{loop.index}}_name" id="railway_{{loop.index}}_name" class="railway_name form-control m-input" placeholder="Enter railway Name" autocomplete="off" value="{{r[0]}}">
+								<input required type="text" name="railway_{{loop.index}}_distance" id="railway_{{loop.index}}_distance" class="railway_distance form-control m-input" placeholder="Enter railway Distance" autocomplete="off" value="{{r[1]}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+					{% else %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input required type="text" name="railway_{{1}}_name" id="railway_{{1}}_name" class="railway_name form-control m-input" placeholder="Enter railway Name" autocomplete="off" value="">
+								<input required type="text" name="railway_{{1}}_distance" id="railway_{{1}}_distance" class="railway_distance form-control m-input" placeholder="Enter railway Distance" autocomplete="off" value="">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+				{% endif %}														
+				</div>
+				<button id="addRowrailway" type="button" class="btn btn-info"onclick="addNewElem('railway')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDatarailway" type="button" class="btn btn-warning" onclick="saveField('railway')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+			<div class="mb-3">
+                <label for="bus" class="form-label">New Connectivity: Bus <img src="https://konsa-college-website-icons.s3.ap-northeast-1.amazonaws.com/assets/icons/bus.png" alt="bus"></label>
+				<p class="alert alert-dark" role="alert" id="bus_save"></p>
+				<input id="bus" name="bus" type="text" class="form-control m-input hide" placeholder="Buses List" autocomplete="off" value>
+                <div id="newRowbus" data-type=2>
+				{% if college.bus != None %}
+					{% for b in college.bus %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input required type="text" name="bus_{{loop.index}}_name" id="bus_{{loop.index}}_name" class="bus_name form-control m-input" placeholder="Enter bus Name" autocomplete="off" value="{{b[0]}}">
+								<input required type="text" name="bus_{{loop.index}}_distance" id="bus_{{loop.index}}_distance" class="bus_distance form-control m-input" placeholder="Enter bus Distance" autocomplete="off" value="{{b[1]}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+					{% else %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input required type="text" name="bus_{{1}}_name" id="bus_{{1}}_name" class="bus_name form-control m-input" placeholder="Enter bus Name" autocomplete="off" value="">
+								<input required type="text" name="bus_{{1}}_distance" id="bus_{{1}}_distance" class="bus_distance form-control m-input" placeholder="Enter bus Distance" autocomplete="off" value="">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+				{% endif %}
+				</div>
+				<button id="addRowbus" type="button" class="btn btn-info"onclick="addNewElem('bus')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDatabus" type="button" class="btn btn-warning" onclick="saveField('bus')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+			<div class="mb-3">
+                <label for="airport" class="form-label">New Connectivity: Airport <img src="https://konsa-college-website-icons.s3.ap-northeast-1.amazonaws.com/assets/icons/plane.png" alt="plane"></label>
+				<p class="alert alert-dark" role="alert" id="airport_save"></p>
+				<input id="airport" name="airport" type="text" class="form-control m-input hide" placeholder="Airports List" autocomplete="off" value>
+                <div id="newRowairport" data-type=2>
+				{% if college.airport != None %}
+					{% for a in college.airport %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input required type="text" name="airport_{{loop.index}}_name" id="airport_{{loop.index}}_name" class="airport_name form-control m-input" placeholder="Enter airport Name" autocomplete="off" value="{{a[0]}}">
+								<input required type="text" name="airport_{{loop.index}}_distance" id="airport_{{loop.index}}_distance" class="airport_distance form-control m-input" placeholder="Enter airport Distance" autocomplete="off" value="{{a[1]}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+					{% else %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input required type="text" name="airport_{{1}}_name" id="airport_{{1}}_name" class="airport_name form-control m-input" placeholder="Enter airport Name" autocomplete="off" value="">
+								<input required type="text" name="airport_{{1}}_distance" id="airport_{{1}}_distance" class="airport_distance form-control m-input" placeholder="Enter airport Distance" autocomplete="off" value="">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+				{% endif %}														
+				</div>
+				<button id="addRowairport" type="button" class="btn btn-info"onclick="addNewElem('airport')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDataairport" type="button" class="btn btn-warning" onclick="saveField('airport')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="scholarships" class="form-label">Scholarships</label>
+				<p class="alert alert-dark" role="alert" id="scholarships_save"></p>
+				<input id="scholarships" name="scholarships" type="text" class="form-control m-input hide" placeholder="Final List of Scholarship" autocomplete="off">
+				<div id="newRowscholarships">
+				{% if college.scholarships %}
+					{% for scholarships in college.scholarships %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input id="scholarships_{{loop.index}}" name="scholarships_{{loop.index}}" type="text" class="form-control m-input" placeholder="Enter Scholarship No. {{loop.index}}" autocomplete="off" value="{{scholarships}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger" onclick='removeField(document, this)'><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+				</div>
+				<button id="addRowscholarships" type="button" class="btn btn-info" onclick="addNewElem('scholarships')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDatascholarships" type="button" class="btn btn-warning" onclick="saveField('scholarships')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="positives" class="form-label">Positives</label>
+				<p class="alert alert-dark" role="alert" id="positives_save"></p>
+				<input id="positives" name="positives" type="text" class="form-control m-input hide" placeholder="Final List of Positive" autocomplete="off" value>
+				<div id="newRowpositives">
+				{% if college.positives %}
+					{% for positives in college.positives %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input type="text" name="positives_{{loop.index}}" id="positives_{{loop.index}}" class="form-control m-input" placeholder="Enter Positive No. {{loop.index}}" autocomplete="off" value="{{positives}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+				</div>
+				<button id="addRowpositives" type="button" class="btn btn-info" onclick="addNewElem('positives')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDatapositives" type="button" class="btn btn-warning" onclick="saveField('positives')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+            <div class="mb-3">
+                <label for="negatives" class="form-label">Negatives</label>
+				<p class="alert alert-dark" role="alert" id="negatives_save"></p>
+				<input id="negatives" name="negatives" type="text" class="form-control m-input hide" placeholder="Final List of Negative" autocomplete="off" value>
+				<div id="newRownegatives">
+				{% if college.negatives %}
+					{% for negatives in college.negatives %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input type="text" name="negatives_{{loop.index}}" id="negatives_{{loop.index}}" class="form-control m-input" placeholder="Enter Negative No. {{loop.index}}" autocomplete="off" value="{{negatives}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+				</div>
+				<button id="addRownegatives" type="button" class="btn btn-info" onclick="addNewElem('negatives')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDatanegatives" type="button" class="btn btn-warning" onclick="saveField('negatives')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="highest_package" class="form-label">Highest package</label>
+                <input type="text" class="form-control" name="highest_package" value="{{college.highest_package}}"
+                    id="highest_package">
+            </div>
+
+            <div class="mb-3">
+                <label for="median_package" class="form-label">Median package</label>
+                <input type="text" class="form-control" name="median_package" value="{{college.median_package}}"
+                    id="median_package">
+            </div>
+
+            <div class="mb-3">
+                <label for="average_package" class="form-label">Average package</label>
+                <input type="text" class="form-control" name="average_package" value="{{college.average_package}}"
+                    id="average_package">
+            </div>
+
+			<div class="mb-3">
+                <label for="top_recruiters" class="form-label">Top Recruiters</label>
+				<p class="alert alert-dark" role="alert" id="top_recruiters_save"></p>
+				<input id="top_recruiters" name="top_recruiters" type="text" class="form-control m-input hide" placeholder="Final List of Top Recruiters" autocomplete="off" value>
+				<div id="newRowtop_recruiters">
+				{% if college.top_recruiters %}
+					{% for top_recruiters in college.top_recruiters %}
+						<div id="inputFormRow">
+							<div class="input-group mb-3">
+								<input type="text" name="top_recruiters_{{loop.index}}" id="top_recruiters_{{loop.index}}" class="form-control m-input" placeholder="Enter Top Recruiter No. {{loop.index}}" autocomplete="off" value="{{top_recruiters}}">
+								<div class="input-group-append">
+									<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}
+				</div>
+				<button id="addRowtop_recruiters" type="button" class="btn btn-info" onclick="addNewElem('top_recruiters')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDatatop_recruiters" type="button" class="btn btn-warning" onclick="saveField('top_recruiters')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+
+			<div class="mb-3">
+                <label for="fees" class="form-label">Fee</label>
+				<p class="alert alert-dark" role="alert" id="fees_save"></p>
+				<input id="fees" name="fees" type="text" class="form-control m-input hide" placeholder="Final List of Top Recruiters" autocomplete="off" value>
+				<div id="newRowfees" data-type=1>
+				{% if college.fees %}
+					{% for fees in college.fees %}
+						{% if fees|length>0 %}
+							{% for key, value in fees.items() %}
+								<div id="inputFormRow">
+									<div class="input-group mb-3">
+										<input required type="text" name="fees_{{loop.index}}_type" id="fees_{{loop.index}}_type" class="fees_type form-control m-input" placeholder="Enter fees Type" autocomplete="off" value="{{ key }}">
+										<input required type="text" name="fees_{{loop.index}}_amount" id="fees_{{loop.index}}_amount" class="fees_amount form-control m-input" placeholder="Enter fees Amount" autocomplete="off" value="{{ value }}">
+										<div class="input-group-append">
+											<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+										</div>
+									</div>
+								</div>
+							  {% endfor %}
+							{% endif %}
+					{% endfor %}
+				{% endif %}
+				</div>
+				<button id="addRowfees" type="button" class="btn btn-info" onclick="addNewElem('fees')"><i class="bi bi-plus-square"></i></button>
+				<button id="saveDatafees" type="button" class="btn btn-warning" onclick="saveField('fees')" title="Save"><i class="bi bi-file-earmark-check"></i></button>
+            </div>
+
+            <div class="mb-3">
+                <label for="review_video" class="form-label">Link to review video</label>
+                <input type="text" class="form-control" name="review_video" value="{{college.review_video}}"
+                    id="review_video" oninput="$(this).siblings('iframe').attr('src', $(this).val())">
+				<iframe class="w-100 h-auto mt-2" src='{{college.review_video}}'></iframe>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-primary">Submit</button>
+
+            <a href="/index" class="btn-secondary btn btn-primary" onclick="return confirm('Are you sure you do not want to save chnages made? Any chnage made would be lost. Be careful little sunshine!')">Cancel</a>
+
+        </form>
+    </div>
+
+
+	<script type="text/javascript">
+		(function (arr) {
+			for (let a of arr) {
+				if ($(`#${a}`)) {
+					a = "#saveData" + a
+					$(a).click()
+					$(a).click()
+				}
+			}
+		}(["railway", "airport", "bus", "scholarships", "positives", "negatives", "top_recruiters", "fees", "exams", "mode_of_admission"]))
+
+		function elementHTML(name, count) {
+			var singleEleme = ''
+			singleEleme += '<div id="inputFormRow">'
+			singleEleme += '<div class="input-group mb-3">'
+			singleEleme += `<input type="text" name="${name}_${count}" id="${name}_${count}" class="form-control m-input" placeholder="Enter ${name}" autocomplete="off" value="">`
+			singleEleme += '<div class="input-group-append">'
+			singleEleme += '<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>'
+			singleEleme += '</div>'
+			singleEleme += '</div>'
+			singleEleme += '</div>'
+
+			var pairEleme = ''
+			pairEleme += '<div id="inputFormRow">'
+			pairEleme += '<div class="input-group mb-3">'
+			pairEleme += `<input required type="text" name="${name}_${count}_type" id="${name}_${count}_type" class="${name}_type form-control m-input" placeholder="Enter ${name} Type" autocomplete="off" value="">`
+			pairEleme += `<input required type="text" name="${name}_${count}_amount" id="${name}_${count}_amount" class="${name}_amount form-control m-input" placeholder="Enter ${name} Amount" autocomplete="off" value="">`
+			pairEleme += '<div class="input-group-append">'
+			pairEleme += '<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>'
+			pairEleme += '</div>'
+			pairEleme += '</div>'
+			pairEleme += '</div>'
+
+			var optionEleme = ''
+			optionEleme += '<div id="inputFormRow">'
+			optionEleme += '<div class="input-group mb-3">'
+			optionEleme += `<input required type="text" name="${name}_${count}_name" id="${name}_${count}_name" class="${name}_name form-control m-input" placeholder="Enter ${name} Name" autocomplete="off" value="">`
+			optionEleme += `<input required type="text" name="${name}_${count}_distance" id="${name}_${count}_distance" class="${name}_distance form-control m-input" placeholder="Enter ${name} Distance" autocomplete="off" value="">`
+			optionEleme += '<div class="input-group-append">'
+			optionEleme += '<button id="removeRow" type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>'
+			optionEleme += '</div>'
+			optionEleme += '</div>'
+			optionEleme += '</div>'
+
+			let type = $("#newRow" + name).data("type")
+
+			switch (type) {
+				case 1:
+			    	html = pairEleme
+			    	break
+				case 2:
+			    	html = optionEleme
+			    	break
+				default:
+					html = singleEleme
+					break
+			}
+
+			return html
+		}
+
+		var count=0
+		function addNewElem(name) {
+			parent = "#newRow"+name
+			output = "#"+name
+			saveData = "#saveData"+name
+			addRow = "#addRow"+name
+			count++
+			var html = elementHTML(name, count)
+
+			$(parent).append(html)
+
+			$(document).on('click', '#removeRow', function () {
+				$(this).closest('#inputFormRow').remove()
+			})
+		}
+
+		function removeField(document, a) {
+			$(document).on('click', '#removeRow', function () {
+				$(a).closest('#inputFormRow').remove()
+			})
+		}
+
+		function saveField(name) {
+
+			saveData = "#saveData"+name
+
+			$(saveData).click(function() {
+				parent = "#newRow"+name
+				output = "#"+name
+				let type = $(parent).data("type")
+				let arr = joinMultiFields(parent, name, type)
+
+				switch (type) {
+					case 1:
+				    	{
+							$("#"+name+"_save").html(`${arr}`)
+							console.log(`${arr}`, arr)
+							$(output).val(`[${arr}]`)
+						}
+				    	break
+					case 2:
+						{
+							$("#"+name+"_save").html(`${arr}`)
+							console.log(`${arr}`, arr)
+							$(output).val(arr)
+						}
+				    	break
+					default:
+						{
+							$("#"+name+"_save").html(`${arr}`)
+							$(output).val(`[${arr}]`)
+						}
+						break
+				}
+			})
+		}
+		
+		function joinMultiFields(parent, name, type) {
+			var arr = []
+
+			switch (type) {
+				case 1: // When data-type=1
+					{
+						const obj = $(parent).find(":input.form-control");
+						const obj_type = $(parent).find(`:input.${name}_type.form-control`);
+						const obj_amount = $(parent).find(`:input.${name}_amount.form-control`);
+						const arr = [];
+						
+						for (let i = 0; i < obj_type.length; i++) {
+							const typeVal = $(obj_type[i]).val();
+							const amountVal = $(obj_amount[i]).val();
+							
+							if (typeVal && amountVal) {
+								arr.push(`{"${typeVal}": "\u20b9${amountVal}"}`);
+							} else {
+								arr.push(null);
+							}
+						}
+					}
+					break
+				case 2:
+					{
+						const obj = $(parent).find(":input.form-control");
+						const objName = $(parent).find(`:input.${name}_name.form-control`);
+						const objDistance = $(parent).find(`:input.${name}_distance.form-control`);
+						const arr = [];
+
+						for (let i = 0; i < objName.length; i++) {
+							const nameValue = $(objName[i]).val();
+							const distanceValue = $(objDistance[i]).val();
+							if (nameValue) {
+								if (distanceValue.includes("KM")) {
+									arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue}"}`);
+								} else {
+									arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue} KM"}`);
+								}
+							} else {
+								arr.push(null);
+							}
+						}
+					}
+					break
+				default: // When there is not data-type
+					{
+						const formControls = $(parent).find(":input.form-control");
+						const arr = [];
+						formControls.each((index, input) => {
+							const inputValue = $(input).val();
+							if (inputValue) {
+								arr.push(`"${inputValue}"`);
+							} else {
+								arr.push(null);
+							}
+						});
+					}
+					break
+			}
+
+			return arr
+		}
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

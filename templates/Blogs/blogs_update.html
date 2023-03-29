@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Konsa College - Blogger's Portal</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="Martup is Multipurpose eCommerce HTML Template, that's perfect for any kind of eCommerce websites such as fashion, furniture and many more.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ::::::::::::::Favicon icon::::::::::::::-->
+    <link rel="icon" href="{{ url_for('static', filename='images/KonsaCollege_Logo.svg') }}" type="image/any-icon">
+
+    <!-- ::::::::::::::All CSS Files here :::::::::::::: -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+        /* Image uploader CSS Start */
+        
+         :root {
+            --base_color: #ffd900;
+            --top_color: #e9f0ff;
+            --secondary_color: #404040;
+            --bor_rad: 5px;
+        }
+        
+        .wrapper {
+            width: 430px;
+            padding: 30px;
+            border-radius: var(--bor_rad);
+        }
+        
+        .wrapper .devo {
+            border: 2px dashed var(--base_color);
+            height: 167px;
+            cursor: pointer;
+            border-radius: var(--bor_rad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 30px 0px;
+        }
+        
+        .devo :where(i,
+        p) {
+            color: black;
+            text-align: center;
+        }
+        
+        .devo i {
+            font-size: 3.125rem;
+        }
+        
+        .wrapper::-webkit-scrollbar {
+            width: 0em;
+        }
+        /* Image uploader CSS End */
+        /* Blogger Profile Start */
+        
+        .search-event::after {
+            content: none;
+            border-radius: 5px solid red;
+        }
+        
+        .widget-social-icon a,
+        .author-blog-details,
+        .breadcrumb-wrapper--style-4.breadcrumb-bg {
+            background-color: #ffd90090;
+            border: none;
+        }
+        
+        .author-blog-details .content,
+        .breadcrumb-wrapper--style-4 .breadcrumb-nav *,
+        .breadcrumb-wrapper--style-4 .content,
+        .breadcrumb-wrapper--style-4 .title {
+            color: #111 !important;
+        }
+        
+        a,
+        button,
+        input,
+        textarea {
+            border: none;
+            outline: none !important;
+            background: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            padding: 0;
+        }
+        
+        input,
+        textarea {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-light bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="https://konsacollege.com">
+				<img src="{{ url_for('static', filename='images/KonsaCollege_Logo.svg') }}" height="30" alt="Konsa College Logo" loading="lazy" />
+			</a>
+		</div>
+	</nav>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form" action="/blogs" method="POST">
+                        <div class="mb-3 row">
+                            <label for="author" class="col-md-2 col-form-label">Author</label>
+                            <div class="col-md-10">
+                                <input required class="form-control" type="text" placeholder="Writer..." value="{{blogs.author}}" name="author" id="author" spellcheck="false" data-ms-editor="true">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="category_id" class="col-md-2 col-form-label">Category ID</label>
+                            <div class="col-md-10">
+                                <select required class="form-select col-12" name="category_id" id="category_id">
+									<option >Choose Category...</option>
+									<option selected="" value={{blogs.category_id}}>You selected previously: {{blogs.category_id}}</option>
+									<option value=1>College Stories</option>
+									<option value=2>JEE Colleges</option>
+									<option value=3>AI Tech.</option>
+								</select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="header_image" class="col-md-2 col-form-label">Choose Header Image</label>
+							<input required class="form-control" type="file" id="header_image_file">
+							<img width="300px" height="auto" src="{{blogs.header_image}}" id="header_image_preview">
+							<input type="text" required name="header_image" id="header_image" value="{{blogs.header_image}}" hidden>
+                        </div>
+
+						<div class="mb-3 row">
+	                        <label for="title" hidden>Blog Title</label>
+	                        <h1><input type="text" required name="title" value="{{blogs.title}}" id="title" placeholder="Write title here..."></h1>
+						</div>
+
+                        <div class="mb-3 row">
+							<label for="subheading" hidden>Write Sub-heading</label>
+                        	<h3><input type="text" required value="{{blogs.subheading}}" name="subheading" id="subheading" placeholder="Write sub-heading here..."></h3>
+						</div>
+
+                        <div class="mb-3 row">
+							<input name="content" id="content" type="text" hidden>
+                            <div class="ms-1 rounded shadow-lg bg-body" id="editorjs"></div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" id="draft-button" class="me-4 btn btn-primary">Save as Draft</button>
+							<br>
+							<small>Clicking on preview button multiple times causes error & deletion of critical data from your article. Be careful with that. Save your progress somewhere else.</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="container text-center">
+		<button type="text" id="preview-button" class="me-4 btn btn-dark">Preview Raw</button>
+		 <div style="overflow: scroll;" id="preview-article"></div>
+		 <div style="overflow: scroll;" class="accordion mt-3" id="accordion_mode_of_admission">
+		   <div class="accordion-item">
+			 <h2 class="accordion-header" id="heading_mode_of_admission">
+			   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_mode_of_admission" aria-expanded="true" aria-controls="collapse_mode_of_admission">
+				 View Raw JSON Content
+			   </button>
+			 </h2>
+			 <div id="collapse_mode_of_admission" class="accordion-collapse collapse" aria-labelledby="heading_mode_of_admission" data-bs-parent="#accordion_mode_of_admission">
+			   <div class="accordion-body">
+				<div id="preview-raw-data"><code id="code">{{content}}</code></div>
+			   </div>
+			 </div>
+		   </div>
+		 </div>
+	</div>
+
+    <!-- EditorJs API CDN Scripts Start -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-image-editorjs@latest"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <script>
+		function fixJSON(jsonStr) {
+			try {
+				JSON.parse(jsonStr);
+					return jsonStr;
+				} catch (e) {
+					let fixedStr = jsonStr.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": ');
+					try {
+						JSON.parse(fixedStr);
+						return fixedStr;
+					} catch (e) {
+					return null;
+					}
+				}
+		}
+
+		const fixedJSON = fixJSON($("#code").html());
+		if (fixedJSON !== null) {
+			console.log("Fixed JSON:", fixedJSON);
+		} else {
+			console.log("Invalid JSON");
+		}
+
+		let content = $("#code").html().replace(/['"]/g, '"').replace('Flase', '"False"')
+		content = {"time":  1679779519036, "blocks":  [{"id":  "V3l5vA8Vi5", "type":  "header", "data":  {"text":  "Load from CDN", "level":  4}}, {"id":  "8K-jDRD1ra", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "QhEyCBc_Uo", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "aGvDCBmooJ", "type":  "header", "data":  {"text":  "Manually load file to your project", "level":  4}}, {"id":  "gFIY2wzOsU", "type":  "paragraph", "data":  {"text":  "Copy&amp;nbsp;&lt;a href='https': //github.com/codex-team/editor.js/releases&gt;editor.js&lt;/a&gt;&amp;nbsp;file to your project and load it."}}, {"id":  "Ii_rXYPeFI", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "2b6fchSxJ5", "type":  "header", "data":  {"text":  "Configuration", "level":  2}}, {"id":  "QASrfCOPYC", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "8UdzoZ83SO", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "FTBIdA32_c", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "MtJGlby6Zj", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "KWk8SToHGD", "type":  "paragraph", "data":  {"text":  "that equals"}}, {"id":  "KbKDcZpb29", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "V9OekdaTk1", "type":  "paragraph", "data":  {"text":  ""}}, {"id":  "ljsmIHUtYo", "type":  "header", "data":  {"text":  "Tools installation", "level":  2}}, {"id":  "ga9ySmxV8i", "type":  "list", "data":  {"style":  "ordered", "items":  ["a", "b"]}}, {"id":  "LERk0j6ky9", "type":  "list", "data":  {"style":  "unordered", "items":  ["c", "d"]}}, {"id":  "o_aIGwIUYi", "type":  "image", "data":  {"url":  "https://res.cloudinary.com/doyci5m01/image/upload/v1679779522/konsa-college-blogs-assets/WhatsApp%20Image%202023-02-24%20at%2021.20.49.jpg.jpg", "caption":  "WhatsApp Image 2023-02-24 at 21.20.49.jpg", "withBorder": "False", "withBackground":  "False", "stretched":  "False"}}], "version":  "2.26.5"}
+
+		$('#draft-button').hide()
+
+		const editor = new EditorJS({
+            holder: 'editorjs',
+            tools: {
+                header: Header,
+                list: List,
+                image: SimpleImage,
+            },
+			data: content,
+        });
+
+		$("#preview-button").click(async function() {
+			await editor.save().then((outputData) => {
+			  	console.log('Article data: ', outputData)
+				preview(JSON.stringify(outputData))
+				$("#content").val(JSON.stringify(outputData))
+				$('#draft-button').show()
+			}).catch((error) => {
+			  console.log('Saving failed: ', error)
+			})
+		})
+
+		const preview = (data) => {
+			$('#preview-raw-data').html('')
+			$('#preview-article').html('')
+			$('#preview-raw-data').append(`${data}`)
+			data['blocks'].forEach((item) => {
+				if (item['type'] == 'header') {
+					$('#preview-article').append(`<h${item['data']['level']}>${item['data']['text']}</h${item['data']['level']}>`)
+				}
+				if (item['type'] == 'paragraph') {
+					$('#preview-article').append(`<p>${item['data']['text']}</p>`)
+				}
+				if (item['type'] == 'image') {
+					$('#preview-article').append(`<img src="${item['data']['url']}">`)
+				}
+			})
+		}
+			
+        const fileInput = $("#header_image_file")
+
+        var fileData;
+        var percent = 0;
+
+        fileInput.on('change', function() {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var thisImage = reader.result;
+                $("#header_image_preview").attr('src', thisImage)
+				$("#header_image").val(thisImage)
+				console.log(thisImage)
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+    </script>
+    <!-- Upload Cover Image Script End -->
+
+</body>
+
+</html>
