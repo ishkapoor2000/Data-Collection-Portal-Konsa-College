@@ -541,28 +541,43 @@
 			switch (type) {
 				case 1: // When data-type=1
 					{
-						obj = $(parent).find(":input.form-control")
-						obj_type = $(parent).find(`:input.${name}_type.form-control`)
-						obj_amount = $(parent).find(`:input.${name}_amount.form-control`)
-						for (let i = 0; i <= (obj_type.length - 1); i++) {
-							if ($(obj_type[i]).val()) {
-								arr.push(`{"${$(obj_type[i]).val()}":"\u20b9${$(obj_amount[i]).val()}"}`)
+						const obj = $(parent).find(":input.form-control")
+						const obj_type = $(parent).find(`:input.${name}_type.form-control`)
+						const obj_amount = $(parent).find(`:input.${name}_amount.form-control`)
+						arr = []
+
+						for (let i = 0; i < obj_type.length; i++) {
+							const typeVal = $(obj_type[i]).val();
+							const amountVal = parseInt($(obj_amount[i]).val().match(/\d+/g)[0])
+							
+							if (typeVal && amountVal) {
+								console.log(`${`{"${typeVal}": "\u20b9${amountVal}"}`}`)
+								arr.push(`{"${typeVal}": "\u20b9${amountVal}"}`);
 							} else {
-								arr.push(null)
+								arr.push(null);
 							}
 						}
 					}
 					break
 				case 2:
 					{
-						obj = $(parent).find(":input.form-control")
-						obj_name = $(parent).find(`:input.${name}_name.form-control`)
-						obj_distance = $(parent).find(`:input.${name}_distance.form-control`)
-						for (let i = 0; i <= (obj_name.length - 1); i++) {
-							if ($(obj_name[i]).val()) {
-								arr.push(`{"trans": "${$(obj_name[i]).val()}", "icon": "", "dist": "${$(obj_distance[i]).val()} KM"}`)
+						const obj = $(parent).find(":input.form-control");
+						const objName = $(parent).find(`:input.${name}_name.form-control`);
+						const objDistance = $(parent).find(`:input.${name}_distance.form-control`);
+						arr = [];
+
+						for (let i = 0; i < objName.length; i++) {
+							const nameValue = $(objName[i]).val();
+							const distanceValue = parseInt($(objDistance[i]).val().match(/\d+/g)[0])
+							if (nameValue) {
+								arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue} KM"}`)
+								// if (distanceValue.includes("KM")) {
+									// arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue}"}`);
+								// } else {
+								// 	arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue} KM"}`);
+								// }
 							} else {
-								arr.push(null)
+								arr.push(null);
 							}
 						}
 					}

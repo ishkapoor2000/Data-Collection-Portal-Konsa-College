@@ -578,16 +578,17 @@
 			switch (type) {
 				case 1: // When data-type=1
 					{
-						const obj = $(parent).find(":input.form-control");
-						const obj_type = $(parent).find(`:input.${name}_type.form-control`);
-						const obj_amount = $(parent).find(`:input.${name}_amount.form-control`);
-						const arr = [];
-						
+						const obj = $(parent).find(":input.form-control")
+						const obj_type = $(parent).find(`:input.${name}_type.form-control`)
+						const obj_amount = $(parent).find(`:input.${name}_amount.form-control`)
+						arr = []
+
 						for (let i = 0; i < obj_type.length; i++) {
 							const typeVal = $(obj_type[i]).val();
-							const amountVal = $(obj_amount[i]).val();
+							const amountVal = parseInt($(obj_amount[i]).val().match(/\d+/g)[0])
 							
 							if (typeVal && amountVal) {
+								console.log(`${`{"${typeVal}": "\u20b9${amountVal}"}`}`)
 								arr.push(`{"${typeVal}": "\u20b9${amountVal}"}`);
 							} else {
 								arr.push(null);
@@ -600,17 +601,18 @@
 						const obj = $(parent).find(":input.form-control");
 						const objName = $(parent).find(`:input.${name}_name.form-control`);
 						const objDistance = $(parent).find(`:input.${name}_distance.form-control`);
-						const arr = [];
+						arr = [];
 
 						for (let i = 0; i < objName.length; i++) {
 							const nameValue = $(objName[i]).val();
-							const distanceValue = $(objDistance[i]).val();
+							const distanceValue = parseInt($(objDistance[i]).val().match(/\d+/g)[0])
 							if (nameValue) {
-								if (distanceValue.includes("KM")) {
-									arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue}"}`);
-								} else {
-									arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue} KM"}`);
-								}
+								arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue} KM"}`)
+								// if (distanceValue.includes("KM")) {
+									// arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue}"}`);
+								// } else {
+								// 	arr.push(`{"trans": "${nameValue}", "icon": "", "dist": "${distanceValue} KM"}`);
+								// }
 							} else {
 								arr.push(null);
 							}
@@ -619,20 +621,21 @@
 					break
 				default: // When there is not data-type
 					{
-						const formControls = $(parent).find(":input.form-control");
-						const arr = [];
+						const formControls = $(parent).find(":input.form-control")
+						console.log(`formControls: `, formControls)
+						arr = []
 						formControls.each((index, input) => {
-							const inputValue = $(input).val();
+							const inputValue = $(input).val()
 							if (inputValue) {
-								arr.push(`"${inputValue}"`);
+								arr.push(`"${inputValue}"`)
 							} else {
-								arr.push(null);
+								arr.push(null)
 							}
 						});
 					}
 					break
 			}
-
+			console.log(`arr: ${arr}`, arr)
 			return arr
 		}
 	</script>
