@@ -1,14 +1,17 @@
 on:
     push:
         branches:
-            - main
+            - production
 
 jobs:
     contrib-readme-job:
         runs-on: ubuntu-latest
-        name: A job to automate contrib in readme
+        name: Github Contributions in Readme.md
         steps:
             - name: Contribute List
               uses: akhilmhdh/contributors-readme-action@v2.3.6
+              with:
+                image_size: 100
+                collaborators: all
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
